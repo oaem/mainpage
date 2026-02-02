@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YourApp – A Bootstrap Fork</title>
+
+  <style>
+    :root {
+      --bg: #0b0e11;
+      --grid: rgba(255,255,255,0.05);
+      --text: #ffffff;
+      --muted: #b5b5b5;
+      --accent: #ff8c1a;
+      --accent-strong: #ff6a00;
+      --glow: rgba(255,140,26,0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(11,14,17,0.75);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+    }
+
+    header nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    header nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+
+    header nav a:hover {
+      color: var(--accent);
+    }
+
+    /* CLAIM BOX */
+    .claim-box {
+      display: flex;
+      align-items: center;
+      background: #0f1115;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border .2s ease, box-shadow .2s ease;
+    }
+
+    .claim-box:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(255,140,26,0.15);
+    }
+
+    .claim-box span {
+      padding: 12px 14px;
+      color: var(--muted);
+      background: #0c0e12;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+    }
+
+    .claim-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 12px 14px;
+      width: 130px;
+    }
+
+    .claim-box button {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    }
+
+    .claim-box button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 30px var(--glow);
+      filter: brightness(1.05);
+    }
+
+    .claim-box button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* HERO */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+      padding: 120px 48px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(255,140,26,0.15);
+      border-radius: 999px;
+      font-size: 14px;
+      color: var(--accent);
+      margin-bottom: 24px;
+      animation: fadeUp .6s ease both;
+    }
+
+    h1 {
+      font-size: 64px;
+      line-height: 1.05;
+      margin: 0 0 16px;
+      animation: fadeUp .6s ease .1s both;
+    }
+
+    h2 {
+      font-weight: 400;
+      color: var(--muted);
+      margin: 0 0 28px;
+      animation: fadeUp .6s ease .2s both;
+    }
+
+    p {
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 32px;
+      animation: fadeUp .6s ease .3s both;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      animation: fadeUp .6s ease .4s both;
+    }
+
+    .buttons a {
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: white;
+    }
+
+    .primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px var(--glow);
+    }
+
+    .secondary {
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+    }
+
+    .secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .code {
+      margin-top: 22px;
+      background: radial-gradient(120% 120% at 0% 0%, rgba(255,140,26,0.15), transparent), #020617;
+      padding: 16px 20px;
+      border-radius: 14px;
+      font-family: monospace;
+      font-size: 14px;
+      color: #ffb066;
+      animation: fadeUp .6s ease .5s both;
+    }
+
+    .preview {
+      position: relative;
+      animation: floatIn .8s ease .3s both;
+    }
+
+    .preview img {
+      width: 100%;
+      border-radius: 18px;
+      box-shadow: none;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(30px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 80px 24px;
+      }
+      h1 { font-size: 48px; }
+    }
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s ease;
+      z-index: 100;
+    }
+
+    .modal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: #0f1115;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 18px;
+      padding: 28px 32px;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity .4s ease, transform .4s ease;
+    }
+
+    .modal.show .modal-box {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+  /* HOVER GLOW BOXES */
+    .hover-glow {
+      transition: border-color .3s ease, box-shadow .3s ease;
+    }
+
+    .hover-glow.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(255,140,26,0.35), 0 10px 40px rgba(255,140,26,0.25);
+    }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <img src="LOGO.png" alt="Logo" width="36" height="36" />
+    <strong>idont.trade</strong>
+  </div>
+
+  <nav>
+    <a href="#" data-modal>GitHub</a>
+    
+    <a href="#" data-modal>About</a>
+
+    <div class="claim-box">
+      <span>idont.trade/</span>
+      <input type="text" placeholder="username" />
+      <button data-modal>Claim</button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="badge">v1.0.0</div>
+    <h1> Your Links and Identity, 
+         on your own customizable Website Card.</h1>
+    <h2>100% Free and easy to do.</h2>
+
+    <p>
+    </p>
+
+    <div class="buttons">
+      <a href="#" class="primary" data-modal>Get Started</a>
+      <a href="https://discord.gg/VfuXm2JTay" target="_blank" class="secondary">Discord</a>
+    </div>
+
+    <div class="code">&gt; winget install yourapp</div>
+  </div>
+
+  <div class="preview">
+    <img src="SCREENSHOT.png" alt="App screenshot" />
+  </div>
+</section>
+
+<div class="modal" id="modal"><div class="modal-box"><h3>We’re still in progress</h3><p>This feature isn’t ready yet. Check back soon.</p></div></div>
+
+<script>
+  const modal = document.getElementById('modal');
+  let modalTimeout;
+
+  // ensure hidden on load
+  modal.classList.remove('show');
+
+  document.querySelectorAll('[data-modal]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      clearTimeout(modalTimeout);
+      modal.classList.add('show');
+      modalTimeout = setTimeout(() => {
+        modal.classList.remove('show');
+      }, 3000);
+    });
+  });
+
+  // hover glow logic
+  document.querySelectorAll('.hover-glow').forEach(el => {
+    let hoverTimeout;
+    el.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimeout);
+      el.classList.add('active');
+      hoverTimeout = setTimeout(() => {
+        el.classList.remove('active');
+      }, 1000);
+    });
+  });
+</script>
+</body>
+</html>
